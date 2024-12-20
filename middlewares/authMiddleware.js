@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose"); // Add mongoose import here
 const User = require("../models/User");
 
 const authValidation = async (req, res, next) => {
@@ -21,9 +22,16 @@ const authValidation = async (req, res, next) => {
 
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded Token:", decoded);
+
+    // Validate user ID format
+    if (!mongoose.Types.ObjectId.isValid(decoded.userId)) {
+      return res.status(400).json({ message: "Invalid user ID in token" });
+    }
 
     // Find the user by the decoded user ID and exclude the password
     const user = await User.findById(decoded.userId).select("-password");
+    console.log("User found:", user);
     if (!user) {
       return res
         .status(404)

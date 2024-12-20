@@ -17,7 +17,6 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ message: "Error registering user", error });
   }
 };
-
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -29,9 +28,10 @@ exports.loginUser = async (req, res) => {
     if (!isMatch)
       return res.status(401).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+    console.log("User ID being used for token:", user._id);
 
     res.json({
       token,
