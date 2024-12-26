@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose"); // Add mongoose import here
+const mongoose = require("mongoose");
 const User = require("../models/User");
 
 const authValidation = async (req, res, next) => {

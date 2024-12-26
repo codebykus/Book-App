@@ -5,15 +5,12 @@ const {
   getReviews,
   deleteReview,
 } = require("../controllers/reviewController");
-const authValidation = require("../middlewares/authValidation");
+const authValidation = require("../middlewares/authMiddleware");
 
-// Route to add a review
 router.post("/add", authValidation, addReview);
 
-// Route to get reviews for a book
 router.get("/:bookId", getReviews);
 
-// Route to delete a review
 router.delete("/:reviewId", authValidation, deleteReview);
 
 module.exports = router;
