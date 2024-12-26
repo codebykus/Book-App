@@ -34,7 +34,7 @@ exports.getReviews = async (req, res) => {
   try {
     const { bookId } = req.params;
 
-    // Find reviews associated with the book
+    // Find reviews
     const reviews = await Review.find({ bookId })
       .populate("userId", "name email") // Populate user details in the review
       .exec();
@@ -62,7 +62,7 @@ exports.deleteReview = async (req, res) => {
       return res.status(404).json({ message: "Review not found" });
     }
 
-    // Ensure that the user can only delete their own review
+    //  user can only delete their own review
     if (review.userId.toString() !== req.user._id.toString()) {
       return res
         .status(403)
