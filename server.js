@@ -7,12 +7,12 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Replaces body-parser
+app.use(express.json()); 
 
 // Validate environment variables
 if (!process.env.MONGO_URI) {
-  console.error("Error: MONGO_URI is not defined in the environment variables");
-  process.exit(1); // Exit process if MONGO_URI is missing
+  console.error("Error: MONGO_URI is not defined");
+  process.exit(1);
 }
 
 // MongoDB Connection
@@ -21,7 +21,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err.message);
-    process.exit(1); // Exit process if MongoDB connection fails
+    process.exit(1); 
   });
 
 // Routes
